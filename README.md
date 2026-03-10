@@ -1,4 +1,6 @@
 # UPCI
 For the processing of our single-cell HRMS data, we have developed a collective of Python functions that together generate an untargeted peak confidence index (UPCI) that can be used to filter out noise from HRMS data. We have generated the following functions (more details per function are given in the code of the respective functions)
-**UPCI_blacklist** 
+
+**UPCI_blacklist** removes the m/z values from the input dataframe that are within "tolerance" ppm of the m/z values input as "mz_blacklist". It gives two dataframes as output: one listing the m/z values that are kept, and one listing those that are removed.
+
 **UPCI_whitelist**
