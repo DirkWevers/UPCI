@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+def UPCI_whitelist(df_data, mz_colname, mz_whitelist, tolerance=5, info=True):
+    if info:
+        print(datetime.now().strftime("%H:%M:%S") + ' | Started UPCI whitelist clean-up')
+
+    # Find m/z values that should be removed from the data, store their indices
+    mz_whitelist = np.unique(mz_whitelist)
+    ind_keep = []
+    for i, mz_val in enumerate(mz_whitelist):
+        if (i + 1) % 10000 == 0 and info:
+            print(datetime.now().strftime("%H:%M:%S") + ' | Processing', i+1, 'of', len(mz_whitelist), 'whitelisted m/z values')
+        LL, UL = mz_val * (1 - tolerance*10**-6), mz_val * (1 + tolerance*10**-6)
+        df_sel = df_data[np.logical_and(df_data[mz_colname] >= LL, df_data[mz_colname] <= UL)]
+        ind_keep += list(df_sel.index)
+
+    # Write data to be kept and data to be processed further to different dataframes
+    ind_keep = list(set(ind_keep))                                  # Remove duplicates
+    ind_rest = list(set(range(df_data.shape[0])) - set(ind_keep))
+    df_keep = df_data.iloc[ind_keep, :]
+    df_rest = df_data.iloc[ind_rest, :]
+
+    return df_keep, df_rest
