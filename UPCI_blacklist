@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+def UPCI_blacklist(df_data, mz_colname, mz_blacklist, tolerance=5, info=True):
+    if info:
+        print(datetime.now().strftime("%H:%M:%S") + ' | Started UPCI blacklist clean-up')
+    # Find m/z values that should be removed from the data, store the row indices
+    mz_blacklist = np.unique(mz_blacklist)
+    ind_blacklist = []
+    for i, mz_val in enumerate(mz_blacklist):
+        if (i + 1) % 10000 == 0 and info:
+            print(datetime.now().strftime("%H:%M:%S") + ' | Processing', i+1, 'of', len(mz_blacklist), 'blacklisted m/z values')
+        LL, UL = mz_val * (1 - tolerance*10**-6), mz_val * (1 + tolerance*10**-6)
+        df_sel = df_data[np.logical_and(df_data[mz_colname] >= LL, df_data[mz_colname] <= UL)]
+        ind_blacklist += list(df_sel.index)
+
+    # Remove these m/z values from the data, keep the others
+    ind_blacklist = list(set(ind_blacklist))                            # Remove duplicates
+    ind_keep = list(set(range(df_data.shape[0])) - set(ind_blacklist))
+    df_out = df_data.iloc[ind_blacklist, :]
+    df_kept = df_data.iloc[ind_keep, :]
+
+    return df_kept, df_out
