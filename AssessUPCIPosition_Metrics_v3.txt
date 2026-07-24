@@ -1,0 +1,7 @@
+Nr. of data points after loading and preprocessing
+Nr. of data points after UPCI
+Nr. of GCTAn peaks
+Nr. of data points after blacklisting
+Nr. of database hits for GCTAn output
+Nr. of GCTAp peaks
+Nr. of database hits for GCTAp output
