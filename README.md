@@ -1,5 +1,5 @@
 # UPCI
-For the processing of our single-cell HRMS data, we have developed a collective of Python functions that together generate an untargeted peak confidence index (UPCI) that can be used to filter out noise from HRMS data. We have generated the following functions (more details per function are given in the code of the respective functions). Furthermore, the data geberated using this code is shared via Zenodo (10.5281/zenodo.21536682). 
+For the processing of our single-cell HRMS data, we have developed a collective of Python functions that together generate an untargeted peak confidence index (UPCI) that can be used to filter out noise from HRMS data. We have generated the following functions (more details per function are given in the code of the respective functions). Furthermore, the data generated using this code is shared via Zenodo (10.5281/zenodo.21536682). 
 
 **CalcDataframeSizes** calculates the sizes of the dataframes that contain hits and non-hits, to help the user balance the training data set. It returns the number of rows to be sampled from the dataframe with the hits and the number of rows to be sampled from the dataframe with the non-hits.
 
